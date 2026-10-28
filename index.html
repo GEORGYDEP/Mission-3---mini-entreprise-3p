@@ -2121,7 +2121,7 @@ const CONFIG = {
   HORS_LIGNE: false,                                                  // true en mode test : rien ne part vers la base
   APP_ID: "mini-entreprise-3p",
   MISSION: "3",
-  VERSION: "2.0",       // 2.0 : base Supabase
+  VERSION: "3.0",       // 2.0 : base Supabase · 3.0 (28/10/2026) : marges du métier, catalogue recalé, mots du cours, bénéfice compté une seule fois
   DOMAINE: "istlm.org",
   CLASSE_DEFAUT: "3P Vente",
   STORAGE_PREFIX: "mini-entreprise-3p-m3-"
@@ -2214,7 +2214,7 @@ TYPES.forEach(t => Object.assign(t, EXTRAS[t.id]));
 
 const STRATEGIES = [
   { id:"petit", nom:"Petits prix", icone:"💰", cls:"st-petit", atout:"Prix bas",
-    texte:"Tu vends pas cher. Beaucoup de clients viennent chez toi, mais tu gagnes peu d'argent sur chaque vente : il faudra vendre beaucoup !",
+    texte:"Tu vends à petits prix. Beaucoup de clients viennent chez toi, mais tu gagnes peu d'argent sur chaque vente : il faudra vendre beaucoup !",
     jauge:{prix:1, qualite:1, clients:3} },
   { id:"milieu", nom:"Bon rapport qualité-prix", icone:"⚖️", cls:"st-milieu", atout:"Grand choix",
     texte:"Des produits de bonne qualité à des prix raisonnables. C'est l'équilibre : ni les moins chers, ni les plus chers.",
@@ -2336,81 +2336,81 @@ const ETAPES_ACHAT = [["bien","Choisir le bien"],["methode","Chercher"],["offres
 //  arrondi à l'euro supérieur (entreprise franchisée : pas de TVA sur ses ventes).
 // ======================================================================
 const MARCH = {
-  ferme:{ tva:6,
+  ferme:{ tva:6, metier:"l'alimentation", marges:[25,45,70],
     pourquoiAchat:"Ta ferme ne produit pas tout : la coopérative te fournit ce que les autres producteurs de la région cultivent ou fabriquent, et tu le revends dans ton magasin.",
     fournisseur:{ code:"AGC", nom:"AgriCoop Hainaut", forme:"SC", rue:"Chaussée de Mons 210", cp:"7800", ville:"Ath", tel:"068 28 41 10", site:"pro.agricoop-hainaut.be", desc:"La coopérative des producteurs du Hainaut" },
     articles:[
-      { ref:"AGC-POM10", nom:"Cageots de pommes Jonagold (10 kg)", unite:"cageot", detail:"Pommes de producteurs du Hainaut, calibre moyen", qte:15, prixHT:9.7,
-        client:{ nom:"École communale « Les Coquelicots »", contact:"Nathalie Roland", role:"directrice", avatar:"🏫", rue:"Rue des Écoles 4", cp:"7080", ville:"Frameries", pourquoi:"pour les collations fruitées des élèves pendant tout le mois" } },
-      { ref:"AGC-JUS6", nom:"Caisses de jus de pomme artisanal (6 × 1 litre)", unite:"caisse", detail:"Jus pressé à la ferme, sans sucre ajouté, bouteilles en verre", qte:12, prixHT:9.9,
-        client:{ nom:"Restaurant « Chez Mamy Lou »", contact:"Louise Delcroix", role:"cheffe et patronne", avatar:"👩‍🍳", rue:"Rue de Mons 45", cp:"7080", ville:"Frameries", pourquoi:"pour accompagner son nouveau menu du terroir" } },
-      { ref:"AGC-GOURM", nom:"Paniers gourmands du terroir", unite:"panier", detail:"Fromage affiné, confiture, jus de pomme et biscuits, panier en osier", qte:8, prixHT:26.4,
+      { ref:"AGC-POM10", nom:"Cageots de pommes Jonagold (10 kg)", unite:"cageot", detail:"Pommes de producteurs du Hainaut, calibre moyen", qte:30, prixHT:9.7, colis:1, colisTxt:"1 palette de 30 cageots",
+        client:{ nom:"Traiteur « Les Marmitons »", contact:"Nathalie Roland", role:"gérante", avatar:"🍲", rue:"Rue des Écoles 4", cp:"7080", ville:"Frameries", pourquoi:"pour les compotes et les collations des cantines scolaires qu'elle fournit" } },
+      { ref:"AGC-JUS6", nom:"Caisses de jus de pomme artisanal (6 × 1 litre)", unite:"caisse", detail:"Jus pressé à la ferme, sans sucre ajouté, bouteilles en verre", qte:20, prixHT:9.9, colis:4, colisTxt:"4 colis de 5 caisses",
+        client:{ nom:"Restaurant « Chez Mamy Lou »", contact:"Louise Delcroix", role:"cheffe et patronne", avatar:"👩‍🍳", rue:"Rue de Mons 45", cp:"7080", ville:"Frameries", pourquoi:"pour accompagner son nouveau menu du terroir pendant tout l'hiver" } },
+      { ref:"AGC-GOURM", nom:"Paniers gourmands du terroir", unite:"panier", detail:"Fromage affiné, confiture, jus de pomme et biscuits, panier en osier", qte:8, prixHT:26.4, colis:2, colisTxt:"2 colis de 4 paniers",
         client:{ nom:"Bureau d'architectes « Lignes & Volumes »", contact:"Sophie Marchal", role:"gérante", avatar:"📐", rue:"Rue de Nimy 88", cp:"7000", ville:"Mons", pourquoi:"pour offrir un cadeau de fin d'année à ses meilleurs clients" } } ] },
-  pepiniere:{ tva:6,
+  pepiniere:{ tva:6, metier:"les plantes et les fleurs", marges:[80,120,160],
     pourquoiAchat:"Certaines plantes demandent des mois, voire des années de culture : tu les achètes déjà prêtes chez ton grossiste, puis tu les revends.",
     fournisseur:{ code:"HWA", nom:"Horti Wallonie", forme:"SRL", rue:"Rue des Horticulteurs 9", cp:"1300", ville:"Wavre", tel:"010 24 66 30", site:"pro.horti-wallonie.be", desc:"Le grossiste des jardineries de Wallonie" },
     articles:[
-      { ref:"HWA-GER12", nom:"Géraniums en pot (12 cm)", unite:"pot", detail:"Fleurs rouges ou roses, prêts à planter", qte:40, prixHT:2,
-        client:{ nom:"Comité des fêtes de Jemappes", contact:"Karim Haddou", role:"président du comité", avatar:"🎪", rue:"Place de Jemappes 3", cp:"7012", ville:"Jemappes", pourquoi:"pour fleurir la place pendant la fête du village" } },
-      { ref:"HWA-ROS3L", nom:"Rosiers buissons en pot (3 litres)", unite:"pot", detail:"Rosiers déjà fleuris, variétés parfumées", qte:20, prixHT:7.1,
+      { ref:"HWA-GER12", nom:"Géraniums en pot (12 cm)", unite:"pot", detail:"Fleurs rouges ou roses, prêts à planter", qte:80, prixHT:2, colis:1, colisTxt:"1 chariot de 80 pots",
+        client:{ nom:"Comité des fêtes de Jemappes", contact:"Karim Haddou", role:"président du comité", avatar:"🎪", rue:"Place de Jemappes 3", cp:"7012", ville:"Jemappes", pourquoi:"pour fleurir la place et les bacs du village pendant la fête" } },
+      { ref:"HWA-ROS3L", nom:"Rosiers buissons en pot (3 litres)", unite:"pot", detail:"Rosiers déjà fleuris, variétés parfumées", qte:24, prixHT:7.1, colis:1, colisTxt:"1 chariot de 24 pots",
         client:{ nom:"Maison de repos « Les Glycines »", contact:"Martine Dubois", role:"directrice", avatar:"🏡", rue:"Avenue des Tilleuls 21", cp:"7340", ville:"Colfontaine", pourquoi:"pour aménager le jardin des résidents" } },
-      { ref:"HWA-OLI120", nom:"Oliviers en pot décoratif (1,20 m)", unite:"pièce", detail:"Olivier taillé, grand pot en terre cuite", qte:4, prixHT:66,
+      { ref:"HWA-OLI120", nom:"Oliviers en pot décoratif (1,20 m)", unite:"pièce", detail:"Olivier taillé, grand pot en terre cuite", qte:4, prixHT:66, colis:1, colisTxt:"1 palette de 4 oliviers", garantie:false,
         client:{ nom:"Hôtel « Le Grand Parc »", contact:"Olivier Lemaire", role:"directeur", avatar:"🏨", rue:"Boulevard Dolez 12", cp:"7000", ville:"Mons", pourquoi:"pour décorer la terrasse de l'hôtel" } } ] },
-  chocolaterie:{ tva:6,
+  chocolaterie:{ tva:6, metier:"la confiserie et le chocolat", marges:[25,45,70],
     pourquoiAchat:"Tes pralines, tu les fabriques toi-même. Mais certaines douceurs demandent des machines spéciales (comme la turbine à dragées) : tu les achètes chez ton grossiste, puis tu les revends.",
     fournisseur:{ code:"DCO", nom:"Douceurs & Co", forme:"SRL", rue:"Rue des Confiseurs 12", cp:"4000", ville:"Liège", tel:"04 223 18 50", site:"pro.douceurs-co.be", desc:"Le grossiste des chocolatiers et pâtissiers" },
     articles:[
-      { ref:"DCO-STNIC", nom:"Sachets de friandises de Saint-Nicolas (150 g)", unite:"sachet", detail:"Speculoos, massepain et chocolats, sachet transparent avec ruban", qte:30, prixHT:1.95,
-        client:{ nom:"École maternelle « Les Petits Loups »", contact:"Fatima El Amrani", role:"institutrice", avatar:"🧸", rue:"Rue de l'Église 10", cp:"7390", ville:"Quaregnon", pourquoi:"pour la visite de saint Nicolas : un sachet pour chaque enfant" } },
-      { ref:"DCO-DRAG100", nom:"Boîtes de dragées aux amandes (100 g)", unite:"boîte", detail:"Dragées blanches et argentées, boîte transparente et ruban", qte:40, prixHT:3.55,
-        client:{ nom:"Julie et Thomas, futurs mariés", contact:"Julie Moreau", role:"future mariée", avatar:"💒", rue:"Rue des Roses 12", cp:"7340", ville:"Colfontaine", pourquoi:"pour offrir des dragées à chaque invité de leur mariage" } },
-      { ref:"DCO-AVOLA", nom:"Coffrets de dragées d'Avola (250 g)", unite:"coffret", detail:"Amandes d'Avola (Sicile), coffret en porcelaine", qte:12, prixHT:14.5,
+      { ref:"DCO-FETE150", nom:"Sachets de friandises pour la fête de l'école (150 g)", unite:"sachet", detail:"Speculoos, massepain et chocolats, sachet transparent avec ruban", qte:100, prixHT:1.9, colis:2, colisTxt:"2 cartons de 50 sachets",
+        client:{ nom:"Comité des parents de l'école « Les Petits Loups »", contact:"Fatima El Amrani", role:"présidente du comité", avatar:"🧸", rue:"Rue de l'Église 10", cp:"7390", ville:"Quaregnon", pourquoi:"pour la fête de l'école : un sachet pour chacun des 100 enfants" } },
+      { ref:"DCO-DRAG100", nom:"Boîtes de dragées aux amandes (100 g)", unite:"boîte", detail:"Dragées blanches et argentées, boîte transparente et ruban", qte:60, prixHT:3.55, colis:2, colisTxt:"2 cartons de 30 boîtes",
+        client:{ nom:"Julie et Thomas, futurs mariés", contact:"Julie Moreau", role:"future mariée", avatar:"💒", rue:"Rue des Roses 12", cp:"7340", ville:"Colfontaine", particulier:true, pourquoi:"pour offrir des dragées à chacun des 60 invités de leur mariage" } },
+      { ref:"DCO-AVOLA", nom:"Coffrets de dragées d'Avola (250 g)", unite:"coffret", detail:"Amandes d'Avola (Sicile), coffret en porcelaine", qte:12, prixHT:14.5, colis:1, colisTxt:"1 carton de 12 coffrets",
         client:{ nom:"Agence immobilière « Prestige Immo »", contact:"Marc Lefebvre", role:"directeur", avatar:"🏛️", rue:"Grand-Place 18", cp:"7000", ville:"Mons", pourquoi:"pour remercier ses meilleurs clients en fin d'année" } } ] },
-  textile:{ tva:21,
+  textile:{ tva:21, metier:"le vêtement", marges:[50,75,110],
     pourquoiAchat:"Ton atelier imprime. Mais la broderie et le tricot demandent des machines que tu n'as pas : tu fais appel à ton grossiste, puis tu revends.",
     fournisseur:{ code:"TXD", nom:"Textiles Delcourt", forme:"SRL", rue:"Rue du Midi 77", cp:"7700", ville:"Mouscron", tel:"056 33 70 12", site:"pro.textiles-delcourt.be", desc:"Le grossiste en vêtements, brodés ou tricotés à la demande" },
     articles:[
-      { ref:"TXD-ECH-TRI", nom:"Écharpes de supporter tricotées aux couleurs du club", unite:"pièce", detail:"Tricot jacquard de 140 cm, nom du club tissé", qte:30, prixHT:4.5,
+      { ref:"TXD-ECH-TRI", nom:"Écharpes de supporter tricotées aux couleurs du club", unite:"pièce", detail:"Tricot jacquard de 140 cm, nom du club tissé", qte:50, prixHT:6.4, colis:2, colisTxt:"2 cartons de 25 écharpes",
         client:{ nom:"Club de foot des Étoiles de Frameries", contact:"Marco Rossi", role:"président du club", avatar:"⚽", rue:"Rue du Stade 1", cp:"7080", ville:"Frameries", pourquoi:"pour ses supporters, à la grande fête du club" } },
-      { ref:"TXD-SW-BRO", nom:"Sweats à capuche brodés au logo de l'entreprise", unite:"pièce", detail:"Molleton épais, logo brodé sur le cœur", qte:15, prixHT:13.4,
-        client:{ nom:"Entreprise de nettoyage « Net & Clair »", contact:"Sandra Pirlot", role:"gérante", avatar:"🧽", rue:"Rue de l'Industrie 7", cp:"7300", ville:"Boussu", pourquoi:"pour habiller ses employés aux couleurs de l'entreprise" } },
-      { ref:"TXD-VCUI-BRO", nom:"Vestes de cuisine brodées (coton premium)", unite:"pièce", detail:"Coton épais, boutons-pressions, nom du restaurant brodé", qte:8, prixHT:33,
+      { ref:"TXD-SW-BRO", nom:"Sweats à capuche brodés au logo de l'entreprise", unite:"pièce", detail:"Molleton épais, logo brodé sur le cœur", qte:20, prixHT:15.2, colis:2, colisTxt:"2 cartons de 10 sweats",
+        client:{ nom:"Entreprise de nettoyage « Net & Clair »", contact:"Sandra Pirlot", role:"gérante", avatar:"🧽", rue:"Rue de l'Industrie 7", cp:"7300", ville:"Boussu", pourquoi:"pour habiller ses 20 employés aux couleurs de l'entreprise" } },
+      { ref:"TXD-VCUI-BRO", nom:"Vestes de cuisine brodées (coton premium)", unite:"pièce", detail:"Coton épais, boutons-pressions, nom du restaurant brodé", qte:8, prixHT:33, colis:1, colisTxt:"1 carton de 8 vestes",
         client:{ nom:"Restaurant gastronomique « L'Écrin »", contact:"Antoine Vervaeke", role:"chef", avatar:"🍽️", rue:"Rue d'Havré 31", cp:"7000", ville:"Mons", pourquoi:"pour les vestes de sa brigade de cuisine" } } ] },
-  baskets:{ tva:21, pourquoiAchat:"",
+  baskets:{ tva:21, metier:"la chaussure", marges:[50,75,100], pourquoiAchat:"",
     fournisseur:{ code:"SPD", nom:"Sport Distribution", forme:"SA", rue:"Boulevard Industriel 60", cp:"1070", ville:"Anderlecht", tel:"02 520 44 80", site:"pro.sport-distribution.be", desc:"Le grossiste en articles de sport" },
     articles:[
-      { ref:"SPD-TOILE-B", nom:"Baskets en toile blanches", unite:"paire", detail:"Toile légère, semelle en caoutchouc", qte:12, prixHT:20.4,
-        client:{ nom:"École de danse « Hip-Hop Factory »", contact:"Inès Dubois", role:"professeure de danse", avatar:"💃", rue:"Rue de Nimy 120", cp:"7000", ville:"Mons", pourquoi:"pour le spectacle de fin d'année de ses élèves" } },
-      { ref:"SPD-VILLE-N", nom:"Baskets de ville confortables (noires)", unite:"paire", detail:"Semelle amortissante et antidérapante, noir uni", qte:10, prixHT:40.5,
-        client:{ nom:"Brasserie « Le Bistrot du Coin »", contact:"David Leroy", role:"patron", avatar:"🍺", rue:"Grand-Rue 54", cp:"7330", ville:"Saint-Ghislain", pourquoi:"pour que ses serveurs soient bien chaussés toute la journée" } },
-      { ref:"SPD-BASK-PRO", nom:"Chaussures de basket montantes pro", unite:"paire", detail:"Amorti renforcé, maintien de la cheville, cuir et mesh", qte:10, prixHT:69.5,
+      { ref:"SPD-TOILE-B", nom:"Baskets en toile blanches", unite:"paire", detail:"Toile légère, semelle en caoutchouc", qte:24, prixHT:17, colis:2, colisTxt:"2 cartons de 12 paires", garantie:true,
+        client:{ nom:"École de danse « Hip-Hop Factory »", contact:"Inès Dubois", role:"professeure de danse", avatar:"💃", rue:"Rue de Nimy 120", cp:"7000", ville:"Mons", pourquoi:"pour les 24 danseurs du spectacle de fin d'année" } },
+      { ref:"SPD-VILLE-N", nom:"Baskets de ville confortables (noires)", unite:"paire", detail:"Semelle amortissante et antidérapante, noir uni", qte:10, prixHT:34.6, colis:1, colisTxt:"1 carton de 10 paires", garantie:true,
+        client:{ nom:"Brasserie « Le Bistrot du Coin »", contact:"David Leroy", role:"patron", avatar:"🍺", rue:"Grand-Rue 54", cp:"7330", ville:"Saint-Ghislain", pourquoi:"pour que ses 10 serveurs soient bien chaussés toute la journée" } },
+      { ref:"SPD-BASK-PRO", nom:"Chaussures de basket montantes pro", unite:"paire", detail:"Amorti renforcé, maintien de la cheville, cuir et mesh", qte:10, prixHT:69.5, colis:1, colisTxt:"1 carton de 10 paires", garantie:true,
         client:{ nom:"Royal Basket Club de Mons", contact:"Yannick Dupont", role:"entraîneur", avatar:"🏀", rue:"Avenue du Tir 10", cp:"7000", ville:"Mons", pourquoi:"pour l'équipe première, avant le début du championnat" } } ] },
-  gaming:{ tva:21, pourquoiAchat:"",
+  gaming:{ tva:21, metier:"le matériel gaming et high-tech", marges:[15,30,50], pourquoiAchat:"",
     fournisseur:{ code:"TCD", nom:"TechDistri", forme:"SA", rue:"Leuvensesteenweg 510", cp:"1930", ville:"Zaventem", tel:"02 725 60 90", site:"pro.techdistri.be", desc:"Le grossiste en électronique et jeux vidéo" },
     articles:[
-      { ref:"TCD-MAN-WL", nom:"Manettes sans fil compatibles", unite:"pièce", detail:"Batterie rechargeable, câble USB-C fourni", qte:10, prixHT:16.5,
-        client:{ nom:"Maison de jeunes « Le Spot »", contact:"Kevin Lambert", role:"animateur", avatar:"🕹️", rue:"Rue de la Station 30", cp:"7300", ville:"Boussu", pourquoi:"pour équiper sa nouvelle salle de jeux" } },
-      { ref:"TCD-CASQ-MIC", nom:"Casques gaming avec micro", unite:"pièce", detail:"Son surround, micro antibruit réglable", qte:8, prixHT:33,
-        client:{ nom:"Club e-sport « Borinage Gaming »", contact:"Lucas Martin", role:"président du club", avatar:"🏆", rue:"Rue de la Gare 15", cp:"7330", ville:"Saint-Ghislain", pourquoi:"pour ses joueurs, avant le prochain tournoi en ligne" } },
-      { ref:"TCD-FAUT-PRE", nom:"Fauteuils gaming premium", unite:"pièce", detail:"Dossier inclinable, coussins lombaires, accoudoirs réglables", qte:4, prixHT:115.5,
+      { ref:"TCD-MAN-WL", nom:"Manettes sans fil compatibles", unite:"pièce", detail:"Batterie rechargeable, câble USB-C fourni", qte:20, prixHT:16.9, colis:1, colisTxt:"1 carton de 20 manettes", garantie:true,
+        client:{ nom:"Maison de jeunes « Le Spot »", contact:"Kevin Lambert", role:"animateur", avatar:"🕹️", rue:"Rue de la Station 30", cp:"7300", ville:"Boussu", pourquoi:"pour équiper les 10 postes de sa nouvelle salle de jeux, avec 2 manettes par poste" } },
+      { ref:"TCD-CASQ-MIC", nom:"Casques gaming avec micro", unite:"pièce", detail:"Son surround, micro antibruit réglable", qte:10, prixHT:32.5, colis:1, colisTxt:"1 carton de 10 casques", garantie:true,
+        client:{ nom:"Club e-sport « Borinage Gaming »", contact:"Lucas Martin", role:"président du club", avatar:"🏆", rue:"Rue de la Gare 15", cp:"7330", ville:"Saint-Ghislain", pourquoi:"pour ses 10 joueurs, avant le prochain tournoi en ligne" } },
+      { ref:"TCD-FAUT-PRE", nom:"Fauteuils gaming premium", unite:"pièce", detail:"Dossier inclinable, coussins lombaires, accoudoirs réglables", qte:4, prixHT:190, colis:4, colisTxt:"4 cartons (1 fauteuil chacun)", garantie:true,
         client:{ nom:"Studio de streaming « Live Box »", contact:"Chloé Vandamme", role:"gérante", avatar:"🎥", rue:"Rue des Arbalestriers 9", cp:"7000", ville:"Mons", pourquoi:"pour aménager ses studios de diffusion" } } ] },
-  velos:{ tva:21, pourquoiAchat:"",
+  velos:{ tva:21, metier:"le vélo", marges:[10,20,35], pourquoiAchat:"",
     fournisseur:{ code:"CBX", nom:"Cycles Benelux", forme:"SA", rue:"Kempische Steenweg 300", cp:"3500", ville:"Hasselt", tel:"011 22 85 40", site:"pro.cycles-benelux.be", desc:"Le grossiste en vélos et accessoires" },
     articles:[
-      { ref:"CBX-CASQ-U", nom:"Casques de vélo", unite:"pièce", detail:"Taille réglable, éclairage arrière intégré", qte:12, prixHT:11.7,
-        client:{ nom:"Auberge de jeunesse de Mons", contact:"Sarah Janssens", role:"gérante", avatar:"🏨", rue:"Rampe du Château 2", cp:"7000", ville:"Mons", pourquoi:"pour prêter des casques aux visiteurs qui louent un vélo" } },
-      { ref:"CBX-VILLE-EQ", nom:"Vélos de ville équipés", unite:"pièce", detail:"Cadre aluminium, 7 vitesses, panier, éclairage et antivol", qte:4, prixHT:247.5,
-        client:{ nom:"Administration communale de Boussu", contact:"Pierre Gilson", role:"échevin de la mobilité", avatar:"🏛️", rue:"Rue Grande 1", cp:"7300", ville:"Boussu", pourquoi:"pour les déplacements des agents communaux en ville" } },
-      { ref:"CBX-ELEC-HG", nom:"Vélo électrique haut de gamme", unite:"pièce", detail:"Moteur central, autonomie 120 km, cadre aluminium, freins hydrauliques", qte:1, prixHT:1235.5,
+      { ref:"CBX-CASQ-U", nom:"Casques de vélo", unite:"pièce", detail:"Taille réglable, éclairage arrière intégré", qte:30, prixHT:14.5, colis:2, colisTxt:"2 cartons de 15 casques", garantie:true,
+        client:{ nom:"Auberge de jeunesse de Mons", contact:"Sarah Janssens", role:"gérante", avatar:"🏨", rue:"Rampe du Château 2", cp:"7000", ville:"Mons", pourquoi:"pour prêter un casque aux visiteurs qui louent un de ses 30 vélos" } },
+      { ref:"CBX-VILLE-EQ", nom:"Vélos de ville équipés", unite:"pièce", detail:"Cadre aluminium, 7 vitesses, panier, éclairage et antivol", qte:4, prixHT:285, colis:4, colisTxt:"4 cartons (1 vélo chacun)", garantie:true,
+        client:{ nom:"Coursiers à vélo « Pédale Express »", contact:"Pierre Gilson", role:"patron", avatar:"🚴", rue:"Rue Grande 1", cp:"7300", ville:"Boussu", pourquoi:"pour ses 4 coursiers qui livrent les colis en ville" } },
+      { ref:"CBX-ELEC-HG", nom:"Vélo électrique haut de gamme", unite:"pièce", detail:"Moteur central, autonomie 120 km, cadre aluminium, freins hydrauliques", qte:1, prixHT:1460, colis:1, colisTxt:"1 grand carton", garantie:true,
         client:{ nom:"Étude du notaire Rousseau", contact:"Hélène Rousseau", role:"notaire", avatar:"⚖️", rue:"Rue de la Chaussée 40", cp:"7000", ville:"Mons", pourquoi:"pour se rendre à ses rendez-vous en ville sans voiture" } } ] },
-  animalerie:{ tva:21, pourquoiAchat:"",
+  animalerie:{ tva:21, metier:"l'animalerie", marges:[20,35,55], pourquoiAchat:"",
     fournisseur:{ code:"ADI", nom:"Animal Distribution", forme:"SA", rue:"Avenue de l'Industrie 40", cp:"6040", ville:"Jumet", tel:"071 35 20 64", site:"pro.animal-distribution.be", desc:"Le grossiste en produits pour animaux" },
     articles:[
-      { ref:"ADI-CROQ4", nom:"Sacs de croquettes pour chiens (4 kg)", unite:"sac", detail:"Croquettes complètes pour chiens adultes", qte:20, prixHT:7.1,
-        client:{ nom:"Refuge « Les Amis des Bêtes »", contact:"Claire Lefèvre", role:"responsable des bénévoles", avatar:"🐾", rue:"Chemin des Prés 8", cp:"7370", ville:"Dour", pourquoi:"pour nourrir les chiens du refuge ce mois-ci" } },
-      { ref:"ADI-PAN-LAV", nom:"Paniers pour chiens lavables", unite:"pièce", detail:"Coussin déhoussable, taille moyenne", qte:10, prixHT:18.7,
-        client:{ nom:"Pension canine « Le Bois Joli »", contact:"Nicolas Hubert", role:"gérant", avatar:"🐕", rue:"Chemin du Bois 3", cp:"7390", ville:"Quaregnon", pourquoi:"pour les box de ses pensionnaires" } },
-      { ref:"ADI-ARBRE-D", nom:"Arbres à chat design", unite:"pièce", detail:"Bois clair, griffoirs en sisal, niche et hamac", qte:5, prixHT:57.5,
+      { ref:"ADI-CROQ4", nom:"Sacs de croquettes pour chiens (4 kg)", unite:"sac", detail:"Croquettes complètes pour chiens adultes", qte:40, prixHT:7.1, colis:1, colisTxt:"1 palette de 40 sacs",
+        client:{ nom:"Refuge « Les Amis des Bêtes »", contact:"Claire Lefèvre", role:"responsable des bénévoles", avatar:"🐾", rue:"Chemin des Prés 8", cp:"7370", ville:"Dour", pourquoi:"pour nourrir les 25 chiens du refuge pendant un mois" } },
+      { ref:"ADI-PAN-LAV", nom:"Paniers pour chiens lavables", unite:"pièce", detail:"Coussin déhoussable, taille moyenne", qte:12, prixHT:18.7, colis:2, colisTxt:"2 cartons de 6 paniers", garantie:true,
+        client:{ nom:"Pension canine « Le Bois Joli »", contact:"Nicolas Hubert", role:"gérant", avatar:"🐕", rue:"Chemin du Bois 3", cp:"7390", ville:"Quaregnon", pourquoi:"pour les 12 box de ses pensionnaires" } },
+      { ref:"ADI-ARBRE-D", nom:"Arbres à chat design", unite:"pièce", detail:"Bois clair, griffoirs en sisal, niche et hamac", qte:5, prixHT:62, colis:5, colisTxt:"5 cartons (1 arbre chacun)", garantie:true,
         client:{ nom:"Bar à chats « Le Chat Pitre »", contact:"Emma Delvaux", role:"gérante", avatar:"🐈", rue:"Rue de la Coupe 22", cp:"7000", ville:"Mons", pourquoi:"pour aménager sa nouvelle salle" } } ] }
 };
 // Conditions de vente du site professionnel (identiques pour tous les fournisseurs) ; délai en jours ouvrables
@@ -2428,10 +2428,12 @@ const SECTEURS = { primaire:"Secteur primaire", secondaire:"Secteur secondaire",
 const STYLES = [["moderne","Moderne"],["elegant","Élégant"],["fun","Fun"],["street","Street"]];
 const POLICES = { moderne:"Outfit, Arial, sans-serif", elegant:"'Playfair Display', Georgia, serif", fun:"Fredoka, 'Comic Sans MS', sans-serif", street:"'Bebas Neue', Impact, sans-serif" };
 const MOTS = {
-  marge:{mot:"Marge bénéficiaire", def:"Ce qu'on ajoute au prix d'achat pour obtenir le prix de vente. C'est ce que l'entreprise gagne sur chaque article. Prix d'achat + marge = prix de vente."},
+  marge:{mot:"Marge bénéficiaire", def:"Ce qu'on ajoute au prix d'achat pour obtenir le prix de vente : un pourcentage du prix d'achat, qui dépend du métier. C'est ce que l'entreprise gagne sur chaque article. Prix d'achat + marge = prix de vente."},
+  franco:{mot:"Franco de port", def:"Livraison gratuite : les frais de transport sont à charge du vendeur, souvent à partir d'un montant minimum. Sinon, c'est « port dû » : c'est l'acheteur qui paie le transport."},
+  grandComptant:{mot:"Paiement au grand comptant", def:"Le client paie dès qu'il reçoit la facture, ici au moment où il emporte sa commande. (« Au comptant », c'est dans les 8 jours ; « à 30 jours », c'est à terme.)"},
   facture:{mot:"Facture", def:"Le document du fournisseur qui réclame le paiement. Une facture déjà payée porte la mention « payée » : on dit qu'elle est acquittée."},
   classement:{mot:"Classement des factures", def:"On garde chaque facture (avec son bon de commande et son bon de livraison) pendant 10 ans : pour la garantie, la comptabilité et les contrôles."},
-  franchise:{mot:"Franchise de TVA", def:"Une petite entreprise (moins de 25 000 € de ventes par an) ne compte pas de TVA à ses clients, mais ne récupère pas la TVA qu'elle paie."},
+  franchise:{mot:"Franchise de TVA", def:"Une petite entreprise (moins de 25 000 € de ventes par an) ne facture pas de TVA à ses clients, mais ne récupère pas la TVA qu'elle paie."},
   commande:{mot:"Vente sur commande", def:"Le client commande d'abord ; l'entreprise achète ensuite exactement ce qu'il faut. Pas de risque de rester avec de la marchandise invendue."},
   paiementCmd:{mot:"Paiement à la commande", def:"On paie au moment où l'on passe la commande, comme sur un site internet. Souvent demandé aux nouveaux clients."},
   factureVente:{mot:"Facture de vente", def:"La facture que TON entreprise établit pour son client : cette fois, c'est toi le fournisseur !"},
@@ -2446,7 +2448,7 @@ let SESSION = { email:"", bloque:"" };
 let M1 = null;               // l'entreprise créée en mission 1 (lecture seule)
 let M2 = null;               // le matériel acheté en mission 2 (lecture seule)
 // cal0 : premier jour de la mission dans le calendrier de l'entreprise (AAAA-MM-JJ), fixé au démarrage
-const fresh = () => ({ v:"m3-2", phase:"accueil", step:0, cal0:null, eleve:{email:"", prenom:"", nom:"", classe:CONFIG.CLASSE_DEFAUT},
+const fresh = () => ({ v:"m3-3", phase:"accueil", step:0, cal0:null, eleve:{email:"", prenom:"", nom:"", classe:CONFIG.CLASSE_DEFAUT},
   verifEx:[false,false,false], classes:[false,false,false], tvaCompris:false,
   clientAccepte:false, articleChoisi:null, quantite:"", paye:false, cmd:null,
   checksBL:[false,false,false], signBL:"", bl:null, checksFact:[false,false,false], factClassee:false, factFourn:null,
@@ -2463,6 +2465,7 @@ const etapeKey = () => ETAPES3[S.step][0];
 // ======================================================================
 const $ = (s, r=document) => r.querySelector(s);
 const esc = (t) => String(t ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const minus = (t) => { t = String(t ?? ""); return t.charAt(0).toLowerCase() + t.slice(1); };   // « Cageots de pommes Jonagold » → « cageots de pommes Jonagold » (sans abaisser les noms propres)
 const eur = (n) => (Math.round(n * 100) / 100).toLocaleString("fr-BE", {minimumFractionDigits: n % 1 ? 2 : 0, maximumFractionDigits:2}) + " €";
 const emailOk = (e) => new RegExp("^[a-z0-9-]+(\\.[a-z0-9-]+)+@" + CONFIG.DOMAINE.replace(".","\\.") + "$").test(e);
 const wait = (ms) => new Promise(r => setTimeout(r, ms));
@@ -2480,7 +2483,7 @@ const deno = () => M1.denomination || (M1.nom + (M1.direction === "plusieurs" ? 
 const forme = () => M1.direction === "plusieurs" ? "Société (SRL)" : "Entreprise individuelle";
 const adresse1 = () => `${M1.rue} ${M1.numero}`;
 const adresse2 = () => `${M1.cp} ${M1.commune}`;
-const fonction = () => M1.direction === "plusieurs" ? (M1.nbAssocies > 1 ? "Gérant(e) et associé(e)" : "Gérant(e)") : "Indépendant(e)";
+const fonction = () => M1.direction === "plusieurs" ? (M1.nbAssocies > 1 ? "Administrateur(-trice) et associé(e)" : "Administrateur(-trice)") : "Indépendant(e)";   // depuis 2019, une SRL est dirigée par des administrateurs (avant : gérants)
 function nomDepuisEmail(email){
   const cap = s => s.split("-").map(w => w ? w[0].toUpperCase() + w.slice(1) : w).join("-");
   const p = email.split("@")[0].split(".");
@@ -2525,17 +2528,24 @@ function factureDepuisAchat(x, k){
   else if (o.remise){ remHT = r2(pHT - taxable); }
   else pHT = taxable;
   const code = (o.numero || "OP-XXX").split("-")[1] || "FRN";
-  return { numero:`FA-${code}-${String(hash((S.eleve.email || "") + o.reference) % 9000 + 1000)}`, date:x.paiement.date || x.bonDeLivraison.date,
+  const f = { numero:`FA-${code}-${String(hash((S.eleve.email || "") + o.reference) % 9000 + 1000)}`, date:x.paiement.date || x.bonDeLivraison.date,
     fournisseur:o.fournisseur, reference:o.reference, article:o.article, detail:o.detail, pHT, remPct:o.remisePourcent || 0, remHT, portHT, taxable, tva, total,
     bc:x.bonDeCommande, bl:x.bonDeLivraison, bienId:x.bien.id };
+  // Depuis la version 6 de la mission 2, le fournisseur remet sa facture à la livraison et elle est enregistrée dans l'achat : on reprend ses chiffres tels quels.
+  const fm2 = x.facture;
+  if (fm2 && fm2.total != null) Object.assign(f, { numero:fm2.numero || f.numero, date:fm2.date || f.date, pHT:+fm2.pHT, remPct:fm2.remPct != null ? +fm2.remPct : f.remPct,
+    remHT:+fm2.remHT || 0, portHT:+fm2.portHT || 0, taxable:+fm2.taxable, tva:+fm2.tva, total:+fm2.total });
+  return f;
 }
 function lireM2(dossier){
-  const m = dossier.missions && dossier.missions["2"] || {}, e = dossier.entreprise || {}, achats = (m.achats || []).filter(a => a.paiement && a.offreChoisie);
+  const m = dossier.missions && dossier.missions["2"] || {}, achats = (m.achats || []).filter(a => a.paiement && a.offreChoisie);
   const ordre = ["mobilier","caisse","ordinateur"];
   const materiel = achats.slice().sort((a,b) => ordre.indexOf(a.bien.id) - ordre.indexOf(b.bien.id)).map(a => { const b = bien(a.bien.id);
     return { libelle:`${b.nom.replace(/^(Le |La |L')/, "").replace(/^./, c => c.toUpperCase())} (${a.offreChoisie.fournisseur.nom})`, montant:a.paiement.montant, icone:b.icone, type:"materiel" }; });
   const paye = materiel.reduce((s,x) => s + x.montant, 0);
-  const banque = e.patrimoine && e.patrimoine.argentEnBanque != null ? e.patrimoine.argentEnBanque : r2(M1.banqueDepart - paye);
+  // Solde de fin de mission 2 : toujours recalculé (apport − frais de création − matériel payé). On ne lit plus entreprise.patrimoine.argentEnBanque :
+  // la mission 3 réécrit ce champ après la vente, ce qui comptait le bénéfice deux fois au rechargement de la page (corrigé le 28/10/2026).
+  const banque = r2(M1.banqueDepart - paye);
   // le jour de chaque paiement (date ISO depuis la version 3.0 de la mission 2, sinon la date écrite en toutes lettres)
   const jourPaye = (a) => CAL.lire(a.paiement.dateISO) || CAL.lireFr(a.paiement.date) || CAL.lireFr(a.bonDeLivraison && a.bonDeLivraison.date);
   const jours = achats.map(jourPaye).filter(Boolean).sort((x, y) => x - y);
@@ -2555,6 +2565,7 @@ const articleClient = () => march().articles[iStrat()];
 const client = () => articleClient().client;          // la stratégie attire son client
 const tauxTVA = () => march().tva || 21;              // 6 % (alimentation, plantes) ou 21 %
 const fournMarch = () => Object.assign({ bce:bceFixe(hash(march().fournisseur.code + "M")) }, march().fournisseur);
+const bceClient = (cl) => bceFixe(hash((cl || client()).nom + "C"));   // numéro d'entreprise fictif du client (pas pour un particulier)
 const pTTC = (ht) => r2(ht * (1 + tauxTVA() / 100));
 /** Calcul de la commande comme sur le site du fournisseur (prix hors TVA, puis la TVA de l'article). */
 function calculCommande(art, q){
@@ -2563,13 +2574,18 @@ function calculCommande(art, q){
   return { q, brut, remise, net, port, taxable, tva, total };
 }
 const achatMarch = () => calculCommande(articleClient(), articleClient().qte);
-/** Le prix de vente se construit à partir du prix d'achat d'un article et de la marge liée à la stratégie. */
+/** Le prix de vente se construit à partir du prix d'achat d'un article et de la marge « du métier » (en % du prix d'achat), modulée par la stratégie :
+ *  chaque activité a ses trois marges (MARCH[…].marges : petits prix / qualité-prix / haut de gamme). Le vélo se vend avec une petite marge
+ *  sur un gros prix, la fleur avec une grosse marge sur un petit prix. Ces marges sont recopiées dans la console (M3_MARCH). */
 const MARGES = [
-  { id:"petit", nom:"Petite marge", pct:20, strat:"Petits prix", icone:"💰" },
-  { id:"milieu", nom:"Marge moyenne", pct:50, strat:"Bon rapport qualité-prix", icone:"⚖️" },
-  { id:"haut", nom:"Grosse marge", pct:100, strat:"Haut de gamme", icone:"💎" }
+  { id:"petit", nom:"Petite marge", strat:"Petits prix", icone:"💰" },
+  { id:"milieu", nom:"Marge moyenne", strat:"Bon rapport qualité-prix", icone:"⚖️" },
+  { id:"haut", nom:"Grosse marge", strat:"Haut de gamme", icone:"💎" }
 ];
-const margeChoisie = () => MARGES[iStrat()];
+const MARGES_DEFAUT = [20, 50, 100];
+const margesMetier = () => (march() && march().marges) || MARGES_DEFAUT;
+const margePct = (k) => margesMetier()[k];
+const margeChoisie = () => Object.assign({}, MARGES[iStrat()], { pct:margePct(iStrat()) });
 const coutUnitaire = () => r2(achatMarch().total / articleClient().qte);     // ce que coûte un article (remise, livraison et TVA comprises)
 const prixAvecMarge = (pct) => r2(coutUnitaire() * (1 + pct / 100));        // prix calculé, avant l'arrondi
 const arrondiEuro = (n) => Math.ceil(r2(n) - 1e-9);                         // comme les commerçants : à l'euro supérieur, sans jamais perdre d'argent
@@ -2593,16 +2609,20 @@ function dateEtape(){
   return ["vente","resultat","patrimoine"].includes(k) ? dateClient() : ["reception","factureMarch","prix"].includes(k) ? jourLivraison() : jour0();
 }
 
-/** Patrimoine : avant (fin de mission 2) ou après la vente (le bénéfice apparaît à droite). */
-function possessions(apres){
-  const cash = apres ? r2(M2.banque - achatMarch().total + venteTotal()) : M2.banque;
-  return M2.materiel.concat([{ libelle:"Argent en banque", montant:cash, icone:"💶", type:"argent" }]);
+/** Patrimoine : "avant" (fin de mission 2), "stock" (marchandise achetée et pas encore vendue : elle vaut son prix d'achat) ou "apres" la vente
+ *  (le bénéfice apparaît à droite). true = après la vente, false = avant. Les deux colonnes restent égales dans les trois états. */
+function possessions(etat){
+  const apres = etat === true || etat === "apres", stock = etat === "stock";
+  const cash = apres ? r2(M2.banque - achatMarch().total + venteTotal()) : stock ? r2(M2.banque - achatMarch().total) : M2.banque;
+  const enStock = stock ? [{ libelle:`Marchandises en stock (${articleClient().nom})`, montant:achatMarch().total, icone:"📦", type:"stock" }] : [];
+  return M2.materiel.concat(enStock, [{ libelle:"Argent en banque", montant:cash, icone:"💶", type:"argent" }]);
 }
+const etatPatrimoine = () => S.venteFaite ? "apres" : S.paye ? "stock" : "avant";
 const heureCourte = () => new Date().toLocaleTimeString("fr-BE", { hour:"2-digit", minute:"2-digit" });
 /** Les mouvements du compte depuis la création de l'entreprise : apport et frais (mission 1), matériel (mission 2), marchandises et vente (mission 3). */
 function mouvementsBanque(){
   const d0 = CAL.lireFr(M1.dateCreation) || jour0(), srl = M1.direction === "plusieurs", f = fournMarch(), cl = client();
-  const l = [{ date:d0, libelle:srl ? "Apport des associés (capital de départ)" : "Apport de départ", detail:`${S.eleve.prenom} ${S.eleve.nom}`.trim(), credit:M1.apport, court:"Apport de départ" },
+  const l = [{ date:d0, libelle:srl ? "Apport de départ des associés" : "Apport de départ", detail:`${S.eleve.prenom} ${S.eleve.nom}`.trim(), credit:M1.apport, court:"Apport de départ" },
     { date:d0, libelle:srl ? "Frais de création de la société" : "Frais d'inscription de l'entreprise", detail:srl ? "Notaire, Moniteur belge, guichet d'entreprises" : "Guichet d'entreprises", debit:M1.frais, court:"Frais de création" }];
   M2.achats.forEach(a => { const o = a.offreChoisie;
     l.push({ date:M2.jourPaye(a) || d0, libelle:`Paiement par carte – ${o.fournisseur.nom} ${o.fournisseur.forme || ""}`.trim(), detail:`${a.bien.nom}${a.bonDeCommande ? " · bon de commande " + a.bonDeCommande.numero : ""}`, debit:a.paiement.montant, court:o.fournisseur.nom }); });
@@ -3096,7 +3116,7 @@ const connexion = () => appelServeur({action:"connexion", email:SESSION.email, m
 
 /** Paquet détaillé envoyé à la base de données. */
 function payload(statut){
-  const art = articleClient(), c = achatMarch(), cl = client(), f = fournMarch(), poss = possessions(S.venteFaite);
+  const art = articleClient(), c = achatMarch(), cl = client(), f = fournMarch(), poss = possessions(etatPatrimoine());
   const ben = S.venteFaite ? benefice() : 0;
   const patrimoine = { possede: poss.map(p => ({ libelle:p.libelle, montant:p.montant })),
     origine:[{ libelle:"Argent de départ (apport)", montant:M1.apport }, { libelle:"Déjà dépensé : frais de création", montant:-M1.frais }].concat(ben ? [{ libelle:"Bénéfice de la première vente", montant:ben }] : []),
@@ -3111,14 +3131,14 @@ function payload(statut){
     classementFactures:{ exempleVerifie:S.verifEx.every(Boolean), facturesClassees:M2.factures.map((x,k) => ({ numero:x.numero, fournisseur:`${x.fournisseur.nom} ${x.fournisseur.forme}`, article:x.article, montant:x.total, classee:!!S.classes[k] })) },
     tva:{ regime:"franchise", compris:S.tvaCompris, tauxMarchandises:tauxTVA() },
     calendrier:{ debut:S.cal0 || null, livraison:S.cal0 ? CAL.iso(jourLivraison()) : null, retraitClient:S.cal0 ? CAL.iso(dateClient()) : null },
-    prixDeVente:{ strategie:M1.strategie, marge:margeChoisie().nom, margePourcent:margeChoisie().pct, prixAchatUnitaire:coutUnitaire(),
+    prixDeVente:{ strategie:M1.strategie, marge:margeChoisie().nom, margePourcent:margeChoisie().pct, metier:march().metier || "", margesDuMetier:margesMetier(), prixAchatUnitaire:coutUnitaire(),
       prixCalcule:prixCalcule(), arrondi:"à l'euro supérieur", margeUnitaire:r2(prixVente() - coutUnitaire()), prixVenteUnitaire:prixVente(), quantite:articleClient().qte, montantVente:venteTotal() },
-    commandeClient:{ client:{ nom:cl.nom, contact:cl.contact, role:cl.role, adresse:`${cl.rue}, ${cl.cp} ${cl.ville}`, raison:cl.pourquoi }, accepte:S.clientAccepte,
-      reference:art.ref, article:art.nom, quantite:art.qte, prixUnitaire:prixVente(), montant:venteTotal(), retrait:`au magasin le ${clientDate()}, paiement ${terminalCB() ? "par carte" : "par virement instantané (QR code)"}` },
+    commandeClient:{ client:{ nom:cl.nom, contact:cl.contact, role:cl.role, adresse:`${cl.rue}, ${cl.cp} ${cl.ville}`, numeroTVA:cl.particulier ? "" : "BE " + bceClient(cl), raison:cl.pourquoi }, accepte:S.clientAccepte,
+      reference:art.ref, article:art.nom, quantite:art.qte, prixUnitaire:prixVente(), montant:venteTotal(), retrait:`au magasin le ${clientDate()}, paiement au grand comptant ${terminalCB() ? "par carte" : "par virement instantané (QR code)"}` },
     achatMarchandises:{ fournisseur:{ nom:f.nom, forme:f.forme, adresse:`${f.rue}, ${f.cp} ${f.ville}`, numeroTVA:"BE " + f.bce, site:f.site },
       articleChoisi: choisi ? choisi.nom : "", bonArticle: S.articleChoisi === iStrat(), quantiteSaisie: +S.quantite || 0,
       reference:art.ref, article:art.nom, quantite:art.qte, prixUnitaireHTVA:art.prixHT, brutHTVA:c.brut, remise:c.remise, fraisDePortHTVA:c.port, montantHTVA:c.taxable, tauxTVA:tauxTVA(), tva:c.tva, totalTVAC:c.total,
-      conditions:{ remise:`${CONDITIONS.remisePct} % dès ${CONDITIONS.remiseDes} pièces`, livraison:`gratuite dès ${CONDITIONS.francoDes} € HTVA (sinon ${CONDITIONS.port} € HTVA)`, delaiJours:CONDITIONS.delai, paiement:"à la commande, par carte bancaire" },
+      conditions:{ remise:`${CONDITIONS.remisePct} % dès ${CONDITIONS.remiseDes} pièces`, livraison:`franco de port dès ${CONDITIONS.francoDes} € HTVA (sinon port dû : ${CONDITIONS.port} € HTVA)`, delaiJours:CONDITIONS.delai, paiement:"à la commande, par carte bancaire" },
       commande: S.cmd, bonDeLivraison: S.bl ? Object.assign({}, S.bl, { verifications:{ bonArticle:S.checksBL[0], bonneQuantite:S.checksBL[1], colisBonEtat:S.checksBL[2] }, signature:S.signBL }) : null,
       facture: S.factFourn ? Object.assign({}, S.factFourn, { verifications:{ memeArticle:S.checksFact[0], memeQuantite:S.checksFact[1], memeMontant:S.checksFact[2] }, classee:S.factClassee }) : null },
     venteClient: S.factVente ? Object.assign({}, S.factVente, { verifications:{ bonClient:S.checksVente[0], bonArticle:S.checksVente[1], bonneQuantite:S.checksVente[2], bonPrix:S.checksVente[3] }, signature:S.signVente, payee:S.venteFaite, modePaiement:terminalCB() ? "carte bancaire (terminal de la caisse)" : "virement instantané (QR code)" }) : null,
@@ -3158,8 +3178,8 @@ window.addEventListener("pagehide", () => {
 
 function restaurer(etat){
   const s = fresh();
-  if (etat && (etat.v === "m3-1" || etat.v === "m3-2")) Object.keys(s).forEach(k => { if (etat[k] !== undefined && etat[k] !== null) s[k] = etat[k]; });
-  s.v = "m3-2";
+  if (etat && ["m3-1","m3-2","m3-3"].includes(etat.v)) Object.keys(s).forEach(k => { if (etat[k] !== undefined && etat[k] !== null) s[k] = etat[k]; });
+  s.v = "m3-3";
   return s;
 }
 
@@ -3317,7 +3337,7 @@ function messagerieHTML(cl, a){
     <div class="mg-barre" aria-hidden="true"><span>✉️ Messagerie</span><span class="mg-compte">${esc(M1.email)}</span>${FENETRE}</div>
     <div class="mg-corps"><div class="mg-dossiers" aria-hidden="true"><span class="on">📥 Boîte de réception <em>1</em></span><span>📤 Envoyés</span><span>🧾 Factures</span><span>🗑️ Corbeille</span></div>
       <div class="mg-lecture"><div class="mg-entete"><div class="mg-av" aria-hidden="true">${cl.avatar}</div><div class="mg-qui"><div class="mh">✉️ ${esc(cl.contact)}, ${esc(cl.role)} – ${esc(cl.nom)}</div><div class="mg-a">À : ${esc(M1.email)}</div></div><span class="mg-heure">À l'instant</span></div>
-        <div class="bubble">Bonjour,<br>Je voudrais vous commander <b>${a.qte} ${esc(a.nom.toLowerCase())}</b> ${esc(cl.pourquoi)}.<br>Pourriez-vous les avoir pour le <b>${esc(clientDate())}</b> ? Je passerai les chercher à votre magasin et je paierai sur place.<br>Merci d'avance !<br><i>${esc(cl.contact)}</i>
+        <div class="bubble">Bonjour,<br>Je voudrais vous commander <b>${a.qte} ${esc(minus(a.nom))}</b> ${esc(cl.pourquoi)}.<br>Pourriez-vous les avoir pour le <b>${esc(clientDate())}</b> ? Je passerai les chercher à votre magasin et je paierai sur place.<br>Merci d'avance !<br><i>${esc(cl.contact)}</i>
           <table class="ordertab"><thead><tr><th>Article</th><th>Quantité</th><th>Ton prix</th></tr></thead><tbody><tr><td>${esc(a.nom)}</td><td>${a.qte}</td><td><i>à calculer</i></td></tr></tbody></table></div></div></div>
     <div class="mg-notif" aria-hidden="true" data-scene="son" data-scene-id="notif-client" data-son="notif" data-son-delai=".9"><span class="app-ico">✉️</span><span><b>${esc(cl.contact)}</b> · Nouveau message</span></div></div>`;
 }
@@ -3565,7 +3585,7 @@ function enteteEntreprise(){
 }
 const blocFournisseur = (o, lbl) => `<div class="to"><div class="lbl">${lbl}</div><b>${esc(o.fournisseur.nom)} ${esc(o.fournisseur.forme)}</b><br>${esc(o.fournisseur.rue)}<br>${esc(o.fournisseur.cp)} ${esc(o.fournisseur.ville)}<br><span style="font-family:var(--mono);font-size:12.5px">TVA BE ${esc(o.fournisseur.bce)}</span></div>`;
 const blocF = (f, lbl) => `<div class="to"><div class="lbl">${lbl}</div><b>${esc(f.nom)} ${esc(f.forme)}</b><br>${esc(f.rue || (f.adresse || "").split(",")[0])}<br>${esc(f.cp ? f.cp + " " + f.ville : (f.adresse || "").split(",").slice(1).join(",").trim())}<br><span style="font-family:var(--mono);font-size:12px">TVA ${esc(f.bce ? "BE " + f.bce : f.numeroTVA || "")}</span></div>`;
-const blocClient = (lbl) => `<div class="to"><div class="lbl">${lbl}</div><b>${esc(deno())}</b><br>${esc(adresse1())}<br>${esc(adresse2())}</div>`;
+const blocClient = (lbl) => `<div class="to"><div class="lbl">${lbl}</div><b>${esc(deno())}</b><br>${esc(adresse1())}<br>${esc(adresse2())}<br><span style="font-family:var(--mono);font-size:12px">TVA BE ${esc(M1.bce)}</span></div>`;
 const signe = (nom, txt) => `<div class="sig"><div><div class="signed">${esc(nom)}</div><small>${txt}</small></div></div>`;
 const pied = `<div class="foot">Document fictif – projet pédagogique, Institut Saint-Luc de Frameries</div>`;
 function enteteF(f){ return `<div class="from"><div class="emb logo-emb" style="background:${couleurF(f)};color:#fff" aria-hidden="true">${esc(initialesF(f))}</div><div><div class="co">${esc(f.nom)} ${esc(f.forme)}</div><p>${esc(f.rue || (f.adresse || "").split(",")[0])}<br>${esc(f.cp ? f.cp + " " + f.ville : (f.adresse || "").split(",").slice(1).join(",").trim())}</p><p class="ids">TVA ${esc(f.bce ? "BE " + f.bce : f.numeroTVA || "")}</p></div></div>`; }
@@ -3585,8 +3605,8 @@ function factureAchatHTML(x){
     <h3 class="doc">FACTURE</h3><div class="ref">N° ${esc(x.numero)} – ${esc(x.date)}<br>Votre commande ${esc(x.bc.numero)} · Livraison ${esc(x.bl.numero)}</div>
     <table><thead><tr><th>Réf.</th><th>Désignation</th><th>Qté</th><th>Montant HTVA</th></tr></thead><tbody>
       <tr><td>${esc(x.reference)}</td><td>${esc(x.article)}</td><td>1</td><td>${eur(x.pHT)}</td></tr>
-      ${x.remHT ? `<tr><td></td><td>Remise ${x.remPct} %</td><td></td><td>− ${eur(x.remHT)}</td></tr>` : ""}
-      ${x.portHT ? `<tr><td></td><td>Frais de livraison</td><td></td><td>${eur(x.portHT)}</td></tr>` : ""}
+      ${x.remHT ? `<tr><td></td><td>Remise de bienvenue ${x.remPct} %</td><td></td><td>− ${eur(x.remHT)}</td></tr><tr><td></td><td>Prix net</td><td></td><td>${eur(r2(x.pHT - x.remHT))}</td></tr>` : ""}
+      ${x.portHT ? `<tr><td></td><td>Frais de port (port dû)</td><td></td><td>${eur(x.portHT)}</td></tr>` : `<tr><td></td><td>Franco de port</td><td></td><td>0 €</td></tr>`}
       <tr><td></td><td>Montant hors TVA</td><td></td><td>${eur(x.taxable)}</td></tr>
       <tr><td></td><td>TVA 21 %</td><td></td><td>${eur(x.tva)}</td></tr>
       <tr><td></td><td><b>Total TVA comprise</b></td><td></td><td><b>${eur(x.total)}</b></td></tr></tbody></table>
@@ -3597,20 +3617,20 @@ function factureMarchHTML(){
   const a = articleClient(), c = achatMarch(), f = fournMarch();
   return `<div class="paper"><div class="dh">${enteteF(f)}${blocClient("Client")}</div>
     <h3 class="doc">FACTURE</h3><div class="ref">N° ${esc(S.factFourn.numero)} – ${esc(S.factFourn.date)}<br>Votre commande ${esc(S.cmd.numero)} · Livraison ${esc(S.bl.numero)}</div>
-    <div class="tab-defil"><table><thead><tr><th>Réf.</th><th>Désignation</th><th>Qté</th><th>Prix HTVA</th><th>Total HTVA</th></tr></thead><tbody>
+    <div class="tab-defil"><table><thead><tr><th>Réf.</th><th>Désignation</th><th>Qté</th><th>Prix HTVA</th><th>Prix brut HTVA</th></tr></thead><tbody>
       <tr><td>${esc(a.ref)}</td><td>${esc(a.nom)}</td><td>${a.qte}</td><td>${eur(a.prixHT)}</td><td>${eur(c.brut)}</td></tr>
-      ${c.remise ? `<tr><td></td><td>Remise ${CONDITIONS.remisePct} %</td><td></td><td></td><td>− ${eur(c.remise)}</td></tr>` : ""}
-      <tr><td></td><td>Frais de livraison</td><td></td><td></td><td>${c.port ? eur(c.port) : "gratuits"}</td></tr>
+      ${c.remise ? `<tr><td></td><td>Remise ${CONDITIONS.remisePct} % (dès ${CONDITIONS.remiseDes} pièces)</td><td></td><td></td><td>− ${eur(c.remise)}</td></tr><tr><td></td><td>Prix net</td><td></td><td></td><td>${eur(c.net)}</td></tr>` : ""}
+      <tr><td></td><td>${c.port ? "Frais de port (port dû)" : "Franco de port"}</td><td></td><td></td><td>${c.port ? eur(c.port) : "0 €"}</td></tr>
       <tr><td></td><td>Montant hors TVA</td><td></td><td></td><td>${eur(c.taxable)}</td></tr>
       <tr><td></td><td>TVA ${tauxTVA()} %</td><td></td><td></td><td>${eur(c.tva)}</td></tr>
       <tr><td></td><td><b>Total TVA comprise</b></td><td></td><td></td><td><b>${eur(c.total)}</b></td></tr></tbody></table></div>
-    <div class="fa-pied"><div class="fa-qr">${KIT.qr(S.factFourn.numero)}<small>QR code de paiement</small></div>
+    <div class="fa-pied">
     <p class="fa-paye"><span class="stamp-paid tampon frappe" style="--delai:1s" data-scene="son" data-scene-id="tampon-facture-fournisseur" data-son="tampon" data-son-delai="1.27">PAYÉE</span><br><small>à la commande, le ${esc(S.cmd.date)}, par carte bancaire</small></p></div>${pied}</div>`;
 }
 function blMarchHTML(lecture){
   const a = articleClient(), f = fournMarch();
   return `<div class="paper"><div class="dh">${enteteF(f)}${blocClient("Destinataire")}</div>
-    <div class="place">${esc(f.ville)}, le ${esc(S.bl.date)}</div><div class="bl-cb" aria-hidden="true">${KIT.codeBarres(S.bl.numero, 34)}<span>${esc(S.bl.numero)}</span></div><h3 class="doc">BON DE LIVRAISON</h3><div class="ref">N° ${esc(S.bl.numero)} · Votre commande n° ${esc(S.cmd.numero)} · Colis : ${S.bl.colis}</div>
+    <div class="place">${esc(f.ville)}, le ${esc(S.bl.date)}</div><div class="bl-cb" aria-hidden="true">${KIT.codeBarres(S.bl.numero, 34)}<span>${esc(S.bl.numero)}</span></div><h3 class="doc">BON DE LIVRAISON</h3><div class="ref">N° ${esc(S.bl.numero)} · Votre commande n° ${esc(S.cmd.numero)} · Colis : ${esc(S.bl.colisTxt || S.bl.colis)}</div>
     <table><thead><tr><th>Référence</th><th>Désignation</th><th>Quantité livrée</th></tr></thead><tbody><tr><td style="font-family:var(--mono)">${esc(a.ref)}</td><td>${esc(a.nom)}</td><td>${a.qte} ${esc(a.unite)}${a.qte > 1 ? "s" : ""}</td></tr></tbody></table>
     <p><b>Conditions :</b> déjà payé à la commande.</p>
     <div class="sig"><div>${lecture ? `<div class="signed">${esc(S.signBL)}</div>` : `<input data-bind="signBL" value="${esc(S.signBL)}" placeholder="Signe ici (prénom et nom)" maxlength="40" aria-label="Signature du bon de livraison">`}<small>Réception – ${esc(S.eleve.prenom)} ${esc(S.eleve.nom)}</small></div></div>${pied}</div>`;
@@ -3626,14 +3646,14 @@ function confirmationHTML(){
 /** La facture de vente : sur le papier à en-tête de l'entreprise (modèle choisi en mission 2), avec les mentions obligatoires. */
 function factureVenteHTML(lecture){
   const a = articleClient(), cl = client(), v = S.factVente, m = modeleDoc(), comm = commStructuree(S.eleve.email + v.numero);
-  const dest = `<div class="to"><div class="lbl">Client</div><b>${esc(cl.nom)}</b><br>À l'attention de ${esc(cl.contact)}<br>${esc(cl.rue)}<br>${esc(cl.cp)} ${esc(cl.ville)}</div>`;
+  const dest = `<div class="to"><div class="lbl">Client</div><b>${esc(cl.nom)}</b><br>À l'attention de ${esc(cl.contact)}<br>${esc(cl.rue)}<br>${esc(cl.cp)} ${esc(cl.ville)}${cl.particulier ? "" : `<br><span style="font-family:var(--mono);font-size:12px">TVA BE ${esc(bceClient(cl))}</span>`}</div>`;
   return `<div class="paper doc-perso fv-doc tpl-${esc(m.modele)}" style="${styleDoc(m)}">${m.filigrane ? `<div class="fili" aria-hidden="true">${M1.symbole || typeM1().emoji}</div>` : ""}
     ${papierEntete(m, dest, `${esc(M1.commune)}, le ${esc(v.date)}`, `<h3 class="doc">FACTURE</h3><div class="ref">N° ${esc(v.numero)} · Votre commande du ${esc(v.commande)}</div>`)}
     <div class="tab-defil"><table><thead><tr><th>Référence</th><th>Désignation</th><th>Quantité</th><th>Prix unitaire</th><th>Total</th></tr></thead><tbody>
       <tr><td style="font-family:var(--mono)">${esc(a.ref)}</td><td>${esc(a.nom)}</td><td>${a.qte}</td><td>${eur(prixVente())}</td><td>${eur(venteTotal())}</td></tr>
       <tr><td></td><td><b>Total à payer</b></td><td></td><td></td><td><b>${eur(venteTotal())}</b></td></tr></tbody></table></div>
     <p class="mention-franchise"><b>Régime particulier de franchise des petites entreprises</b> : TVA non applicable.</p>
-    <div class="fv-paiement"><div><b>Conditions :</b> marchandise enlevée au magasin le ${esc(v.date)}, paiement comptant ${terminalCB() ? "par carte bancaire" : "par virement instantané"}.
+    <div class="fv-paiement"><div><b>Conditions :</b> marchandise retirée au magasin le ${esc(v.date)} ; paiement au grand comptant (dès réception de la facture), ${terminalCB() ? "par carte bancaire" : "par virement instantané"}${a.garantie ? " ; garantie : 2 ans" : ""}.
       <span class="fv-banque">IBAN ${esc(M1.iban)} · Communication : <b>${esc(comm)}</b></span></div>
       ${terminalCB() ? "" : `<div class="fv-qr">${KIT.qr(comm + M1.iban)}<small>Scannez pour payer<br>avec votre appli bancaire</small></div>`}</div>
     ${S.venteFaite ? `<p class="fa-paye"><span class="stamp-paid tampon frappe" style="--delai:.75s" data-scene="son" data-scene-id="tampon-facture-vente" data-son="tampon" data-son-delai="1.02">PAYÉE</span></p>` : ""}
@@ -3663,11 +3683,11 @@ R.tva = () => { const x = M2.factures[M2.factures.length - 1];
   return enteteEtape("Et cette <span class='grad'>TVA</span> ?", "Sur la facture, tu as vu « TVA 21 % ». La TVA (taxe sur la valeur ajoutée) est un impôt que l'État ajoute au prix de presque tout ce qu'on achète.")
   + `<div class="bureau tva-bureau"><div class="tvabox"><div class="tva-gauche kit-anim" data-anim="tva-facture"><div class="paper tva-extrait"><b>🧾 Sur ta facture</b><p>Prix hors TVA : <b>${eur(x.taxable)}</b></p><p class="tva-ligne"><span class="surligne">TVA 21 % : <b>${eur(x.tva)}</b><span class="feutre" aria-hidden="true"></span></span></p><p class="big">${eur(x.total)}</p><p class="help">C'est ce montant, TVA comprise, que tu as réellement payé.</p></div></div>
     <div class="kit-anim d2" data-anim="tva-fiche"><div class="fiche trombone"><b>🏷️ Ton entreprise est « franchisée »</b><p>Elle est petite : elle vendra moins de <b>25 000 €</b> cette année. Elle profite donc du <b>régime de la franchise</b> :</p>
-      <p>✓ elle a bien un numéro de TVA,<br>✓ elle <b>ne compte pas de TVA</b> à ses clients,<br>✗ mais elle <b>ne récupère pas</b> la TVA qu'elle paie à ses fournisseurs.</p></div></div></div></div>
+      <p>✓ elle a bien un numéro de TVA,<br>✓ elle <b>ne facture pas de TVA</b> à ses clients,<br>✗ mais elle <b>ne récupère pas</b> la TVA qu'elle paie à ses fournisseurs.</p></div></div></div></div>
     <div class="taux-tva kit-anim d3" data-anim="tva-taux"><div class="tt-carte ${tauxTVA() === 21 ? "moi" : ""}"><b>21 %</b><span>le taux normal</span><small>meubles, ordinateurs, vêtements, chaussures, vélos, jeux, accessoires…</small></div>
       <div class="tt-carte ${tauxTVA() === 6 ? "moi" : ""}"><b>6 %</b><span>le taux réduit</span><small>produits de première nécessité : alimentation, boissons sans alcool, plantes et fleurs…</small></div></div>`
-  + coach(`Pour ton entreprise, le prix qui compte, c'est donc toujours le prix <b>TVA comprise</b>. Ton matériel était à 21 % ; tes marchandises (${esc(articleClient().nom.toLowerCase())}) seront à <b>${tauxTVA()} %</b>${tauxTVA() === 6 ? " : c'est un produit de première nécessité" : ""}. Quand ton entreprise dépassera 25 000 € de ventes par an, tout changera… mais ce sera pour plus tard !`)
-  + `<div class="verif"><label><input type="checkbox" id="tvaok" ${S.tvaCompris ? "checked" : ""}>J'ai compris : mon entreprise ne compte pas de TVA à ses clients et ne récupère pas celle qu'elle paie.</label></div>`
+  + coach(`Pour ton entreprise, le prix qui compte, c'est donc toujours le prix <b>TVA comprise</b>. Ton matériel était à 21 % ; tes marchandises (${esc(minus(articleClient().nom))}) seront à <b>${tauxTVA()} %</b>${tauxTVA() === 6 ? " : c'est un produit de première nécessité" : ""}. Quand ton entreprise dépassera 25 000 € de ventes par an, tout changera… mais ce sera pour plus tard !`)
+  + `<div class="verif"><label><input type="checkbox" id="tvaok" ${S.tvaCompris ? "checked" : ""}>J'ai compris : mon entreprise ne facture pas de TVA à ses clients et ne récupère pas celle qu'elle paie.</label></div>`
   + boutons("Continuer", "next", S.tvaCompris, "Coche la case pour continuer.");
 };
 
@@ -3689,7 +3709,7 @@ R.client = () => { const cl = client(), a = articleClient();
     <p class="lead" style="text-align:center;margin:0 auto">Un client a choisi <b>${esc(deno())}</b>. C'est un grand jour pour ton entreprise !</p>
     ${strat() ? `<p class="strat-attire">${strat().icone} Ta stratégie « ${esc(strat().nom)} » a attiré ce client : ${esc(["il cherche le meilleur prix", "il veut de la qualité à un prix raisonnable", "il veut ce qu'il y a de mieux"][iStrat()])}.</p>` : ""}</div>
     ${messagerieHTML(cl, a)}`
-  + coach(`${march().pourquoiAchat ? esc(march().pourquoiAchat) + "<br>" : ""}Tu n'as pas encore cette marchandise en magasin : tu vas la commander chez ton fournisseur, ${esc(march().fournisseur.nom)}, qui livre en ${CONDITIONS.delai} jours ouvrables. C'est de la <b>vente sur commande</b> : tu achètes exactement ce que ton client a demandé, sans risque de rester avec des invendus. Ton prix de vente ? Tu le calculeras quand tu connaîtras ton prix d'achat.`)
+  + coach(`${[`Avec tes petits prix, ce client commande en grande quantité (${a.qte} ${esc(a.unite)}${a.qte > 1 ? "s" : ""}) : c'est comme ça qu'on vend beaucoup !`, "Ton client veut de la qualité à un prix raisonnable : exactement ce que tu proposes.", "Ton client veut ce qu'il y a de mieux, et il est prêt à y mettre le prix."][iStrat()]}<br>${march().pourquoiAchat ? esc(march().pourquoiAchat) + "<br>" : ""}Tu n'as pas encore cette marchandise en magasin : tu vas la commander chez ton fournisseur, ${esc(march().fournisseur.nom)}, qui livre en ${CONDITIONS.delai} jours ouvrables. C'est de la <b>vente sur commande</b> : tu achètes exactement ce que ton client a demandé, sans risque de rester avec des invendus. Ton prix de vente ? Tu le calculeras quand tu connaîtras ton prix d'achat.`)
   + boutons("J'accepte la commande 🤝", "accepter", true);
 };
 
@@ -3699,7 +3719,7 @@ R.boutique = () => { const m = march(), f = fournMarch(), a = articleClient(), c
     + `<div class="duo2" style="align-items:start"><div class="kit-anim" data-anim="mail-confirmation" data-scene="son" data-scene-id="notif-confirmation" data-son="notif" data-son-delai="1">${confirmationHTML()}</div><div>${coach("Sur un site internet, le formulaire de commande et l'e-mail de confirmation jouent le rôle du <b>bon de commande</b> : garde bien cet e-mail ! Et comme tu es un nouveau client, tu as payé <b>à la commande</b>.")}
       ${telBanqueHTML({ lignes:mouvementsBanque(), titulaire:deno(), iban:M1.iban, heure:heureCourte(), anim:"tel-banque-commande" })}</div></div>`
     + boutons("Avancer jusqu'à la livraison →", "attendreLivraison", true);
-  return enteteEtape("Commande sur le site <span class='grad'>de ton fournisseur</span>", `Ton client t'a commandé <b>${a.qte} ${esc(a.nom.toLowerCase())}</b>. Trouve le bon article sur le site de ${esc(f.nom)} et indique la bonne quantité.`)
+  return enteteEtape("Commande sur le site <span class='grad'>de ton fournisseur</span>", `Ton client t'a commandé <b>${a.qte} ${esc(minus(a.nom))}</b>. Trouve le bon article sur le site de ${esc(f.nom)} et indique la bonne quantité.`)
   + `<div class="browser kit-anim" data-anim="boutique-site" style="--lf:${couleurF(f)}">
     <div class="bw-onglets" aria-hidden="true"><span class="bw-onglet">${logoF(f, "bw-fav")}<span>${esc(f.nom)} – Espace pro</span><span class="bw-x">✕</span></span><span class="bw-plus">+</span><span class="bw-fen"><span>—</span><span>▢</span><span>✕</span></span></div>
     <div class="bar"><span class="bw-nav" aria-hidden="true">← → ⟳</span><span class="url">${CADENAS}<span>https://<b>${esc(f.site)}</b>/commande</span></span><span class="bw-ext" aria-hidden="true">☆ ⋮</span></div>
@@ -3707,12 +3727,12 @@ R.boutique = () => { const m = march(), f = fournMarch(), a = articleClient(), c
       <small class="shop-compte">Espace professionnel · connecté : ${esc(deno())}</small><span class="shop-panier" aria-hidden="true">🛒<b>${choisi ? 1 : 0}</b></span></div>
     <div class="shopbody"><div><div class="bw-fil" aria-hidden="true">Accueil › Catalogue professionnel › Sélection pour vous</div><div class="prods">${m.articles.map((x,k) => `<button class="prod ${S.articleChoisi === k ? "on" : ""}" data-art="${k}">${photoHTML(x)}<span class="p-txt"><b>${esc(x.nom)}</b><small>Réf. ${esc(x.ref)} · ${esc(x.detail)}</small><span class="p-stock">En stock</span></span>
         <span class="px"><b>${eur(pTTC(x.prixHT))}</b>TVAC / ${esc(x.unite)}<br><small>${eur(x.prixHT)} HTVA</small><br><span class="p-ajout">${S.articleChoisi === k ? "✓ Dans le panier" : "Ajouter au panier"}</span></span></button>`).join("")}</div>
-      <div class="condbox"><b>📋 Nos conditions de vente</b><span>🏷️ Remise de ${CONDITIONS.remisePct} % dès ${CONDITIONS.remiseDes} pièces</span><span>🚚 Livraison : ${CONDITIONS.port} € HTVA, gratuite dès ${CONDITIONS.francoDes} € HTVA</span><span>⏱️ Délai : ${CONDITIONS.delai} jours ouvrables</span><span>💳 Nouveau client : paiement à la commande, par carte bancaire</span></div></div>
+      <div class="condbox"><b>📋 Nos conditions de vente</b><span>🏷️ Remise de ${CONDITIONS.remisePct} % dès ${CONDITIONS.remiseDes} pièces</span><span>🚚 Franco de port dès ${CONDITIONS.francoDes} € HTVA (sinon port dû : ${CONDITIONS.port} € HTVA)</span><span>⏱️ Délai : ${CONDITIONS.delai} jours ouvrables</span><span>💳 Nouveau client : paiement à la commande, par carte bancaire</span></div></div>
       <div class="cart"><h4>🛒 Mon panier${choisi ? `<span class="cart-nb">1 article</span>` : ""}</h4>${choisi ? `<div class="cart-art">${photoHTML(choisi)}<div><b>${esc(choisi.nom)}</b><small>Réf. ${esc(choisi.ref)}</small></div></div><div class="qty"><label for="qte">Quantité :</label><input id="qte" data-bind="quantite" inputmode="numeric" maxlength="3" value="${esc(S.quantite)}" autocomplete="off"></div>
         ${S.articleChoisi !== null && !bonArt ? `<div class="warnline">⚠️ Ce n'est pas l'article commandé par ton client.</div>` : ""}
         ${q && !bonneQ ? `<div class="warnline">⚠️ Ton client a commandé ${a.qte} ${esc(a.unite)}${a.qte > 1 ? "s" : ""}.</div>` : ""}${ok ? `<div class="okline">✔ Bon article, bonne quantité.</div>` : ""}
-        ${q ? `<div class="ln"><span>${q} × ${eur(choisi.prixHT)}</span><span>${eur(c.brut)}</span></div>${c.remise ? `<div class="ln" style="color:#1E8E4E"><span>Remise ${CONDITIONS.remisePct} %</span><span>− ${eur(c.remise)}</span></div>` : ""}
-          <div class="ln"><span>Livraison</span><span>${c.port ? eur(c.port) : "gratuite"}</span></div><div class="ln"><span>Total hors TVA</span><span>${eur(c.taxable)}</span></div><div class="ln"><span>TVA ${tauxTVA()} %</span><span>${eur(c.tva)}</span></div>
+        ${q ? `<div class="ln"><span>Prix brut : ${q} × ${eur(choisi.prixHT)}</span><span>${eur(c.brut)}</span></div>${c.remise ? `<div class="ln" style="color:#1E8E4E"><span>Remise ${CONDITIONS.remisePct} % (dès ${CONDITIONS.remiseDes} pièces)</span><span>− ${eur(c.remise)}</span></div><div class="ln"><span>Prix net</span><span>${eur(c.net)}</span></div>` : ""}
+          <div class="ln"><span>${c.port ? "Frais de port (port dû)" : "Franco de port (livraison gratuite)"}</span><span>${c.port ? eur(c.port) : "0 €"}</span></div><div class="ln"><span>Total hors TVA</span><span>${eur(c.taxable)}</span></div><div class="ln"><span>TVA ${tauxTVA()} %</span><span>${eur(c.tva)}</span></div>
           <div class="ln tot"><span>Total à payer</span><span>${eur(c.total)}</span></div><div class="help" style="color:#6B6F88">Livraison prévue : ${esc(CAL.jour(jourLivraison()))} (${CONDITIONS.delai} jours ouvrables) – ton client vient le ${esc(clientDate())} ✔</div>` : ""}`
         : `<div class="cart-vide"><span aria-hidden="true">🛒</span><p class="help" style="color:#6B6F88">Clique sur un article pour l'ajouter.</p></div>`}</div></div>
     <div class="bw-pied" aria-hidden="true"><span>🔒 Paiement sécurisé</span><span>🚚 Livraison en ${CONDITIONS.delai} jours ouvrables</span><span>© ${jour0().getFullYear()} ${esc(f.nom)} ${esc(f.forme)}</span></div></div>`
@@ -3740,11 +3760,12 @@ R.prix = () => { const a = articleClient(), c = achatMarch(), m = margeChoisie()
   const raisons = (M1.raisons || []).filter(Boolean);
   return enteteEtape("Ton <span class='grad'>prix de vente</span>", `Avant que ${esc(client().contact)} arrive, il faut fixer ton prix. On part toujours de ce que la marchandise t'a coûté, puis on ajoute ta marge.`)
   + `<div class="pv-strat glass"><div class="pv-ico">${st ? st.icone : m.icone}</div><div><small>Ta stratégie, choisie à la création de ton entreprise</small><b>${esc(st ? st.nom : m.strat)}</b>
-      <span>${esc(st ? st.texte : "")}</span>${raisons.length ? `<em class="pv-raisons">Tu l'avais choisie parce que : « ${raisons.map(esc).join(" » et « ")} ».</em>` : ""}</div><div class="pv-marge"><small>Donc ta marge</small><b>${esc(m.nom.toLowerCase())}</b><span>${m.pct} %</span></div></div>
+      <span>${esc(st ? st.texte : "")}</span>${raisons.length ? `<em class="pv-raisons">Tu l'avais choisie parce que : « ${raisons.map(esc).join(" » et « ")} ».</em>` : ""}
+      <em class="pv-raisons">Dans ton métier (${esc(march().metier || "le commerce")}), les commerçants ajoutent de ${margePct(0)} % à ${margePct(2)} % au prix d'achat, selon leur stratégie.</em></div><div class="pv-marge"><small>Donc ta marge</small><b>${esc(m.nom.toLowerCase())}</b><span>${m.pct} %</span></div></div>
     <div class="pv-grid"><div class="pv-calc glass"><h3 class="sub" style="margin-top:0">Le calcul de ton prix, étape par étape</h3>
       ${ligne(1, "Ce que tu as payé à ton fournisseur", `Facture de ${esc(fournMarch().nom)} pour ${a.qte} ${esc(a.unite)}${a.qte > 1 ? "s" : ""}`, eur(c.total))}
       ${ligne(2, "Ton prix d'achat pour un article", `${eur(c.total)} ÷ ${a.qte} = ${eur(cu)} <i>(remise, livraison et TVA comprises)</i>`, eur(cu))}
-      ${ligne(3, `Ta marge (${m.pct} %)`, `${eur(cu)} × ${m.pct} % = ${eur(marge)}`, "+ " + eur(marge))}
+      ${ligne(3, `Ta marge : ${m.pct} % du prix d'achat`, `${eur(cu)} × ${m.pct} % = ${eur(marge)}`, "+ " + eur(marge))}
       ${ligne(4, "Ton prix calculé", `${eur(cu)} + ${eur(marge)} = ${eur(pc)}`, eur(pc))}
       ${ligne(5, "Ton prix de vente, arrondi à l'euro supérieur", pc === pv ? "Le prix tombe déjà sur un euro rond." : `${eur(pc)} → <b>${eur(pv)}</b> <i>: un prix simple pour ton client, et tu ne perds rien</i>`, eur(pv), true)}
       <div class="pv-total">Sur chaque article, tu gagnes <b>${eur(pv)} − ${eur(cu)} = ${eur(gain)}</b>. Pour ${a.qte} ${esc(a.unite)}${a.qte > 1 ? "s" : ""}, ton client paiera <b>${a.qte} × ${eur(pv)} = ${eur(venteTotal())}</b>.</div></div>
@@ -3752,10 +3773,10 @@ R.prix = () => { const a = articleClient(), c = achatMarch(), m = margeChoisie()
     <div class="pv-grid pv-grid2"><div class="kit-anim" data-anim="prix-etiquette">${etiquetteHTML()}</div>
       <div class="pv-cmp glass"><h3 class="sub" style="margin-top:0">Et avec une autre marge ?</h3>
         <table class="cmp"><thead><tr><th>Marge</th><th>Prix de vente</th><th>Gain par article</th><th>Gain total</th></tr></thead><tbody>
-        ${MARGES.map((x,k) => { const p = arrondiEuro(prixAvecMarge(x.pct)), g = r2(p - cu); return `<tr class="${k === iStrat() ? "moi" : ""}"><td>${x.icone} ${esc(x.nom)} <small>(${x.pct} %)</small>${k === iStrat() ? " 👈" : ""}</td><td>${eur(p)}</td><td>${eur(g)}</td><td>${eur(r2(p * a.qte - c.total))}</td></tr>`; }).join("")}
+        ${MARGES.map((x,k) => { const p = arrondiEuro(prixAvecMarge(margePct(k))), g = r2(p - cu); return `<tr class="${k === iStrat() ? "moi" : ""}"><td>${x.icone} ${esc(x.nom)} <small>(${margePct(k)} %)</small>${k === iStrat() ? " 👈" : ""}</td><td>${eur(p)}</td><td>${eur(g)}</td><td>${eur(r2(p * a.qte - c.total))}</td></tr>`; }).join("")}
         </tbody></table>
-        <p class="help" style="margin-top:10px">Petite marge = prix bas : on gagne peu sur chaque article, il faut en vendre beaucoup. Grosse marge = prix élevé : on gagne beaucoup sur chaque article, mais il faut des clients prêts à payer plus.</p></div></div>`
-  + coach(`Avec ta stratégie « ${esc(st ? st.nom : m.strat)} », tu ajoutes <b>${m.pct} %</b> à ton prix d'achat, puis tu arrondis à l'euro supérieur. Ton prix de vente est donc de <b>${eur(pv)}</b> l'article. Retiens la formule : <b>prix d'achat + marge = prix de vente</b>.`)
+        <p class="help" style="margin-top:10px">Petite marge = prix bas : on gagne peu sur chaque article, il faut en vendre beaucoup. Grosse marge = prix élevé : on gagne beaucoup sur chaque article, mais il faut des clients prêts à payer plus. Et la marge dépend du métier : un vélo se vend avec une petite marge sur un gros prix, une fleur avec une grosse marge sur un petit prix.</p></div></div>`
+  + coach(`Avec ta stratégie « ${esc(st ? st.nom : m.strat)} », tu ajoutes <b>${m.pct} % de ton prix d'achat</b>, puis tu arrondis à l'euro supérieur. Ton prix de vente est donc de <b>${eur(pv)}</b> l'article. Retiens la formule : <b>prix d'achat + marge = prix de vente</b>.`)
   + boutons(`Je fixe mon prix à ${eur(pv)} 🏷️`, "fixerPrix", true);
 };
 
@@ -3771,8 +3792,9 @@ R.vente = () => { const cl = client(), ok = S.checksVente.every(Boolean) && S.si
   const ordi = M2.ordiNiveau === "milieu" ? "Ton logiciel de gestion a rempli cette facture tout seul : vérifie-la et signe-la."
     : M2.ordiNiveau === "haut" ? "Ton imprimante couleur vient d'imprimer cette facture : vérifie-la et signe-la."
     : "Tu as préparé cette facture avec le traitement de texte de ton ordinateur portable : vérifie-la et signe-la.";
-  const paie = terminalCB() ? "Ta caisse a un terminal de paiement : ton client paiera sur place, par carte."
-    : "Ta caisse n'a pas de terminal de paiement : ton client paiera avec l'appli de sa banque, en scannant le QR code de ta facture (virement instantané).";
+  const paie = (terminalCB() ? "Ta caisse a un terminal de paiement : ton client paie sur place, par carte."
+    : "Ta caisse n'a pas de terminal de paiement : ton client paie avec l'appli de sa banque, en scannant le QR code de ta facture (virement instantané).")
+    + " Il paie dès qu'il reçoit la facture : c'est un paiement <b>au grand comptant</b>.";
   return enteteEtape(`${esc(cl.contact)} est <span class='grad'>au magasin</span>`, `Ton client vient chercher sa commande. ${ordi}`)
   + comptoirHTML()
   + `<div class="duo2 duo-doc" style="align-items:start"><div class="bureau vente-bureau"><div class="vente-doc kit-anim" data-anim="facture-vente">${factureVenteHTML(false)}</div></div><div><div class="card glass"><h3 class="sub" style="margin-top:0">Ma vérification</h3>
@@ -3784,6 +3806,7 @@ R.vente = () => { const cl = client(), ok = S.checksVente.every(Boolean) && S.si
 R.resultat = () => enteteEtape("Le résultat de <span class='grad'>ta première vente</span>", "Tu as acheté de la marchandise, puis tu l'as vendue plus cher. Combien ton entreprise a-t-elle gagné ?")
   + `<div class="bureau resu-bureau"><div class="kit-anim" data-anim="resultat-doc" data-scene="son" data-scene-id="caisse-benefice" data-son="caisse" data-son-delai="1.5">${resultatHTML()}</div></div>`
   + `<div class="explain">💡 <b>Ce tableau, c'est le résultat.</b> À gauche, ce que tu as dépensé pour vendre ; à droite, ce que tu as vendu. La différence, c'est ton <b>bénéfice</b>. Tout a été vendu : il ne te reste aucune marchandise en magasin.
+    <br>⚠️ Ce bénéfice n'est pas encore ce qu'il te reste pour toi : chaque mois, ton entreprise doit aussi payer son loyer, l'électricité, les assurances… Tu le découvriras dans une prochaine mission.
     <br>Et ton matériel (mobilier, caisse, ordinateur) ? Il n'est pas une dépense : il reste dans ton entreprise et servira encore longtemps.
     <br>${M1.direction === "plusieurs" ? (M1.nbAssocies > 1 ? `Ce bénéfice appartient à ta société (SRL). ${M1.nbAssocies > 2 ? `Avec tes ${M1.nbAssocies - 1} associés` : "Avec ton associé"}, vous déciderez ensemble de le garder dans l'entreprise ou de le partager.` : "Ce bénéfice appartient à ta société (SRL) : tu décideras de le garder dans l'entreprise pour grandir… ou d'en prendre une partie.") : "Ton entreprise est individuelle : ce bénéfice est à toi. Mais pour l'instant, il reste sur le compte de l'entreprise : il servira à acheter tes prochaines marchandises !"}</div>`
   + boutons("Voir mon patrimoine 🏦", "next", true);
@@ -3830,7 +3853,7 @@ function dossierImpression(){
   const tete = (n) => `<div class="dz-head"><b>${esc(deno())}</b> · Mission 3 : ma première vente · ${esc(S.eleve.prenom)} ${esc(S.eleve.nom)} · ${esc(S.eleve.classe)}<span>Page ${n}/2</span></div>`;
   return `<div class="dossier">
     <div class="pg">${tete(1)}
-      <div class="blk"><h3 class="dz-t">1. La commande de mon client</h3><div class="bubble"><b>${esc(cl.contact)}</b>, ${esc(cl.role)} – ${esc(cl.nom)} : ${a.qte} ${esc(a.nom.toLowerCase())} ${esc(cl.pourquoi)}, à retirer au magasin le ${esc(clientDate())}.</div></div>
+      <div class="blk"><h3 class="dz-t">1. La commande de mon client</h3><div class="bubble"><b>${esc(cl.contact)}</b>, ${esc(cl.role)} – ${esc(cl.nom)} : ${a.qte} ${esc(minus(a.nom))} ${esc(cl.pourquoi)}, à retirer au magasin le ${esc(clientDate())}.</div></div>
       <div class="blk"><h3 class="dz-t">2. Ma commande chez le fournisseur (payée à la commande)</h3>${confirmationHTML()}</div>
       <div class="blk"><h3 class="dz-t">3. La facture du fournisseur, vérifiée et classée</h3>${factureMarchHTML()}</div>
     </div>
@@ -3896,7 +3919,7 @@ async function controlerEnFond(){ if (!pingAutorise()) return; if (!(await verif
 // ======================================================================
 //  NAVIGATION
 // ======================================================================
-const MOT_ETAPE = { factures:"facture", tva:"franchise", classement:"classement", client:"commande", boutique:"paiementCmd", prix:"marge", vente:"factureVente", resultat:"benefice" };
+const MOT_ETAPE = { factures:"facture", tva:"franchise", classement:"classement", client:"commande", boutique:"paiementCmd", reception:"franco", prix:"marge", vente:"factureVente", resultat:"benefice" };
 function avancer(important){
   const k = etapeKey();
   gagner("e_" + k, 80);
@@ -3943,7 +3966,7 @@ async function payerCommande(){
 }
 function preparerDocs(){
   const f = fournMarch(), a = articleClient();
-  if (etapeKey() === "reception" && !S.bl){ S.bl = { numero:`BL-${f.code}-${String(hash(S.eleve.email + "bl") % 90000 + 10000)}`, date:CAL.date(jourLivraison()), dateISO:CAL.iso(jourLivraison()), colis: Math.max(1, Math.ceil(a.qte / 10)) }; save(); }
+  if (etapeKey() === "reception" && !S.bl){ S.bl = { numero:`BL-${f.code}-${String(hash(S.eleve.email + "bl") % 90000 + 10000)}`, date:CAL.date(jourLivraison()), dateISO:CAL.iso(jourLivraison()), colis: a.colis || Math.max(1, Math.ceil(a.qte / 10)), colisTxt: a.colisTxt || "" }; save(); }
   if (etapeKey() === "factureMarch" && !S.factFourn){ S.factFourn = { numero:`FA-${f.code}-${String(hash(S.eleve.email + "fa") % 90000 + 10000)}`, date:CAL.date(jourLivraison()), dateISO:CAL.iso(jourLivraison()), montant:achatMarch().total }; save(); }
   if (etapeKey() === "vente" && !S.factVente){ S.factVente = { numero:`${dateClient().getFullYear()}-001`, date:CAL.date(dateClient()), dateISO:CAL.iso(dateClient()), commande:CAL.date(jour0()), montant:venteTotal() }; save(); }
 }
@@ -4068,7 +4091,7 @@ document.addEventListener("click", async (e) => {
     case "classerFact": S.factClassee = true; save(); render(); toast("<div>🗂️ Facture classée dans « Factures fournisseurs ».</div>"); break;
     case "encaisser": {
       await overlay(["💳","⏳","✅"], `${esc(client().contact)} paie ${eur(venteTotal())}…`, 1800);
-      S.venteFaite = true; badge("factvente"); unlockMot("factureVente"); save(); render(true); confetti(); sauvegarder(true); break; }
+      S.venteFaite = true; badge("factvente"); unlockMot("factureVente"); unlockMot("grandComptant"); save(); render(true); confetti(); sauvegarder(true); break; }
     case "terminer": badge("benef"); unlockMot("benefice"); terminer(); break;
   }
 });
